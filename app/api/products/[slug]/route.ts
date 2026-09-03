@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { FALLBACK_PRODUCTS } from "@/lib/catalog-data";
 
 export const dynamic = "force-dynamic";
 
@@ -10,29 +11,48 @@ export async function GET(
   try {
     const { slug } = await params;
 
-    const product = await prisma.product.findFirst({
-      where: {
-        OR: [{ slug: slug }, { id: slug }],
-      },
-      include: {
-        variants: {
+    // 1. Try querying Database via Prisma
+    try {
+      if (process.env.DATABASE_URL) {
+        const product = await prisma.product.findFirst({
+          where: {
+            OR: [{ slug: slug }, { id: slug }],
+          },
           include: {
-            emiPlans: {
-              orderBy: {
-                tenureMonths: "asc",
+            variants: {
+              include: {
+                emiPlans: {
+                  orderBy: {
+                    tenureMonths: "asc",
+                  },
+                },
               },
             },
           },
-        },
-      },
-    });
+        });
 
-    if (!product) {
+        if (product) {
+          return NextResponse.json({
+            success: true,
+            data: product,
+          });
+        }
+      }
+    } catch (dbErr) {
+      console.warn("Prisma query failed, using fallback data for slug:", slug, dbErr);
+    }
+
+    // 2. Resilient fallback
+    const fallbackProduct = FALLBACK_PRODUCTS.find(
+      (p) => p.slug === slug || p.id === slug
+    );
+
+    if (!fallbackProduct) {
       return NextResponse.json(
         {
           success: false,
           error: "Product not found",
-          message: `No product matches slug or ID "${slug}"`,
+          message: `No product matches slug "${slug}"`,
         },
         { status: 404 }
       );
@@ -40,7 +60,7 @@ export async function GET(
 
     return NextResponse.json({
       success: true,
-      data: product,
+      data: fallbackProduct,
     });
   } catch (error: any) {
     console.error("GET /api/products/[slug] error:", error);

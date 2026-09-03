@@ -11,25 +11,38 @@ import {
   Zap,
 } from "lucide-react";
 
+import { FALLBACK_PRODUCTS } from "@/lib/catalog-data";
+
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const products = await prisma.product.findMany({
-    include: {
-      variants: {
+  let products: any[] = [];
+  try {
+    if (process.env.DATABASE_URL) {
+      products = await prisma.product.findMany({
         include: {
-          emiPlans: {
-            orderBy: {
-              monthlyAmount: "asc",
+          variants: {
+            include: {
+              emiPlans: {
+                orderBy: {
+                  monthlyAmount: "asc",
+                },
+              },
             },
           },
         },
-      },
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+    }
+  } catch (err) {
+    console.warn("HomePage prisma query failed, using fallback:", err);
+  }
+
+  if (!products || products.length === 0) {
+    products = FALLBACK_PRODUCTS;
+  }
 
   return (
     <main className="min-h-screen pb-20">
@@ -125,9 +138,9 @@ export default async function HomePage() {
 
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => {
+          {products.map((product: any) => {
             const defaultVar =
-              product.variants.find((v) => v.isDefault) || product.variants[0];
+              product.variants.find((v: any) => v.isDefault) || product.variants[0];
             const lowestEmi = defaultVar?.emiPlans[0]?.monthlyAmount || 0;
             const discount = (defaultVar?.mrp || 0) - (defaultVar?.price || 0);
 
@@ -185,7 +198,7 @@ export default async function HomePage() {
 
                   {/* Color dots preview */}
                   <div className="flex items-center gap-1.5 mt-3">
-                    {product.variants.slice(0, 4).map((v) => (
+                    {product.variants.slice(0, 4).map((v: any) => (
                       <span
                         key={v.id}
                         className="w-3.5 h-3.5 rounded-full border border-black/10 shadow-inner"
