@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="samsungGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#534b63"/>
+      <stop offset="50%" stop-color="#3e374d"/>
+      <stop offset="100%" stop-color="#2b2538"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#0f172a" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <!-- Boxy Ultra Sharp Form Factor -->
+  <g filter="url(#phoneShadow)">
+    <rect x="52" y="30" width="276" height="560" rx="16" fill="#1e242d" stroke="#64748b" stroke-width="2"/>
+    <rect x="55" y="33" width="270" height="554" rx="14" fill="url(#samsungGrad)"/>
+  </g>
+
+  <!-- 4 Floating Clean Camera Rings -->
+  <!-- Lens 1 (Ultra Wide) -->
+  <g transform="translate(95, 80)">
+    <circle cx="0" cy="0" r="20" fill="#18181b" stroke="#a1a1aa" stroke-width="2.5"/>
+    <circle cx="0" cy="0" r="14" fill="#09090b"/>
+    <circle cx="-3" cy="-3" r="4" fill="#60a5fa" opacity="0.6"/>
+  </g>
+  <!-- Lens 2 (Main 200MP) -->
+  <g transform="translate(95, 134)">
+    <circle cx="0" cy="0" r="20" fill="#18181b" stroke="#a1a1aa" stroke-width="2.5"/>
+    <circle cx="0" cy="0" r="14" fill="#09090b"/>
+    <circle cx="-3" cy="-3" r="4" fill="#60a5fa" opacity="0.6"/>
+  </g>
+  <!-- Lens 3 (Periscope 50MP 5x) -->
+  <g transform="translate(95, 188)">
+    <circle cx="0" cy="0" r="20" fill="#18181b" stroke="#a1a1aa" stroke-width="2.5"/>
+    <rect x="-8" y="-8" width="16" height="16" rx="3" fill="#09090b"/>
+  </g>
+  <!-- Secondary column: Flash & Laser AF -->
+  <circle cx="138" cy="88" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <circle cx="138" cy="134" r="12" fill="#18181b" stroke="#a1a1aa" stroke-width="2"/>
+  <circle cx="138" cy="134" r="7" fill="#09090b"/>
+  <circle cx="138" cy="178" r="12" fill="#18181b" stroke="#a1a1aa" stroke-width="2"/>
+  <circle cx="138" cy="178" r="7" fill="#09090b"/>
+
+  <!-- Subtle Samsung Text -->
+  <text x="190" y="530" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="700" font-size="12" fill="#ffffff" opacity="0.3" letter-spacing="4">SAMSUNG</text>
+</svg>

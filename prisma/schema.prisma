@@ -1,0 +1,78 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  name        String
+  brand       String
+  category    String           @default("Smartphones")
+  description String
+  tagline     String?
+  badge       String?          // e.g. "NEW", "BESTSELLER"
+  rating      Float            @default(4.8)
+  reviewCount Int              @default(120)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  variants    ProductVariant[]
+}
+
+model ProductVariant {
+  id          String    @id @default(cuid())
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name        String
+  colorName   String    // e.g. "Desert Titanium", "White Titanium", "Black Titanium"
+  colorHex    String    // e.g. "#C68D6A"
+  storage     String    // e.g. "256GB"
+  mrp         Float     // e.g. 134900
+  price       Float     // e.g. 127400
+  imageUrl    String
+  inStock     Boolean   @default(true)
+  isDefault   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  emiPlans    EmiPlan[]
+
+  @@unique([productId, colorName, storage])
+}
+
+model EmiPlan {
+  id             String         @id @default(cuid())
+  variantId      String
+  variant        ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  tenureMonths   Int            // e.g. 3, 6, 12, 24, 36, 48, 60
+  monthlyAmount  Float          // e.g. 44967
+  interestRate   Float          // e.g. 0.0 or 10.5
+  cashbackAmount Float          @default(0) // e.g. 7500
+  isRecommended  Boolean        @default(false)
+  mfSchemeName   String         @default("1Fi Liquid & Arbitrage Yield Fund")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model OrderApplication {
+  id              String   @id @default(cuid())
+  productId       String
+  variantId       String
+  emiPlanId       String
+  productName     String
+  variantDetails  String
+  tenureMonths    Int
+  monthlyAmount   Float
+  interestRate    Float
+  cashbackAmount  Float
+  customerName    String
+  customerPhone   String
+  customerEmail   String
+  customerPan     String?
+  status          String   @default("SUBMITTED")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pixelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eed0d3"/>
+      <stop offset="50%" stop-color="#dbaab0"/>
+      <stop offset="100%" stop-color="#c2878f"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#0f172a" flood-opacity="0.22"/>
+    </filter>
+    <filter id="visorShadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Rounded Friendly Pixel Form Factor -->
+  <g filter="url(#phoneShadow)">
+    <rect x="52" y="30" width="276" height="560" rx="46" fill="#1e242d" stroke="#64748b" stroke-width="2"/>
+    <rect x="55" y="33" width="270" height="554" rx="43" fill="url(#pixelGrad)"/>
+  </g>
+
+  <!-- Iconic Pixel Camera Visor Pill -->
+  <g filter="url(#visorShadow)">
+    <rect x="66" y="80" width="248" height="66" rx="33" fill="#18181b" stroke="#e2e8f0" stroke-width="1.5" stroke-opacity="0.3"/>
+    <!-- Pill cutout for cameras -->
+    <rect x="80" y="90" width="150" height="46" rx="23" fill="#09090b"/>
+    <!-- Lenses -->
+    <circle cx="106" cy="113" r="16" fill="#1e293b"/>
+    <circle cx="106" cy="113" r="10" fill="#020617"/>
+    <circle cx="146" cy="113" r="16" fill="#1e293b"/>
+    <circle cx="146" cy="113" r="10" fill="#020617"/>
+    <rect x="180" y="103" width="30" height="20" rx="4" fill="#020617" stroke="#334155"/>
+    
+    <!-- Flash & Temp Sensor -->
+    <circle cx="266" cy="103" r="7" fill="#fef08a" stroke="#ca8a04" stroke-width="1"/>
+    <circle cx="266" cy="123" r="5" fill="#334155"/>
+  </g>
+
+  <!-- Minimal 'G' Logo -->
+  <g transform="translate(190, 360)" opacity="0.35">
+    <circle cx="0" cy="0" r="18" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <path d="M 0,-4 L 14,-4 L 14,8 L 0,8 Z" fill="#dbaab0"/>
+    <line x1="0" y1="0" x2="14" y2="0" stroke="#ffffff" stroke-width="4"/>
+  </g>
+</svg>
