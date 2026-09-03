@@ -5,13 +5,6 @@ A modern, production-grade full-stack web application that allows customers to p
 
 ---
 
-## 🌟 Live Demo & Video Guide
-
-- **Live Demo Link**: [Deployable directly to Vercel / Render]
-- **Walkthrough Video Outline**: See [Video Demonstration Guide](#-video-demonstration-script-2-5-mins) for the exact 3-minute recording script showcasing frontend, variant switching, database, and backend APIs.
-
----
-
 ## 🚀 Key Features
 
 1. **100% Dynamic Database-Driven Data**:
